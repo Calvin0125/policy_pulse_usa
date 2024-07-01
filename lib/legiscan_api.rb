@@ -56,7 +56,16 @@ class LegiscanApi
 
   def get_bill_text(doc_id)
     response = HTTP.get("https://api.legiscan.com/?key=#{@api_key}&op=getBillText&id=#{doc_id}")
-    # Todo:
-    # How can I decode the full text, which is inside ['text']['doc']
+    base_64_encoded_text = JSON.parse(response.body)['text']['doc']
+    decoded_text = Base64.decode64(base_64_encoded_text)
+    pdf_io = StringIO.new(decoded_text)
+    pdf_reader = PDF::Reader.new(pdf_io)
+
+    text = ""
+    pdf_reader.pages.each do |page|
+      text += page.text
+    end
+
+    text.gsub(/\s+/, ' ').strip
   end
 end

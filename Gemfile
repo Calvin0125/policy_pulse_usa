@@ -44,6 +44,7 @@ gem "bootsnap", require: false
 
 gem 'http'
 gem 'byebug'
+gem 'pdf-reader'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
