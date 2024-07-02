@@ -45,6 +45,8 @@ gem "bootsnap", require: false
 gem 'http'
 gem 'byebug'
 gem 'pdf-reader'
+gem 'vcr'
+gem 'webmock'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
