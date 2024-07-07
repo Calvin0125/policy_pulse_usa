@@ -47,6 +47,8 @@ gem 'byebug'
 gem 'pdf-reader'
 gem 'vcr'
 gem 'webmock'
+gem 'redis'
+gem 'sidekiq'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
