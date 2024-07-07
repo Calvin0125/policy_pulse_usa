@@ -49,6 +49,8 @@ gem 'vcr'
 gem 'webmock'
 gem 'redis'
 gem 'sidekiq'
+gem 'annotate'
+gem 'shoulda-matchers'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
