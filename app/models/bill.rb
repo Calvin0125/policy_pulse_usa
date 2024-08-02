@@ -21,6 +21,7 @@
 #  session_id  (session_id => sessions.id)
 #
 class Bill < ApplicationRecord
+  # TODO: Add unique constraing to legiscan_bill_id and legiscan_doc_id
   belongs_to :session
 
   enum status: { introduced: 1, engrossed: 2, enrolled: 3, passed: 4, vetoed: 5 }
