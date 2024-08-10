@@ -1,12 +1,16 @@
-class AddAndUpdateBills
+class AddAndUpdateBills < ApplicationJob
   include Sidekiq::Worker
 
   SESSION_CUTOFF_YEAR = 2023
-  BILL_CUTOFF_DATE = DateTime.new(2024, 7, 25)
+  BILL_CUTOFF_DATE = DateTime.new(2024, 8, 1)
 
   def perform
     legiscan_api = LegiscanApi.new
+    check_for_new_sessions(legiscan_api)
+    create_and_update_bills(legiscan_api)
+  end
 
+  def check_for_new_sessions(legiscan_api)
     legiscan_api.get_session_list.each do |session|
       if session['year_start'] < SESSION_CUTOFF_YEAR
         next
@@ -17,57 +21,81 @@ class AddAndUpdateBills
                        start_date: DateTime.new(session['year_start'], 1, 1, 0, 0, 0),
                        end_date: DateTime.new(session['year_end'], 12, 31, 23, 59, 59))
       end
+    end
+  end
 
-      Session.where('end_date > ?', Time.now).each do |session|
-        legiscan_api.get_bill_list(session.legiscan_session_id).each do |bill|
-          if bill["status_date"] < BILL_CUTOFF_DATE
-            next
-          end
+  def create_and_update_bills(legiscan_api)
+    Session.where('end_date > ?', Time.now).each do |session|
+      legiscan_api.get_bill_list(session.legiscan_session_id).each do |legiscan_response_bill|
+        if legiscan_response_bill["status_date"] < BILL_CUTOFF_DATE
+          next
+        end
 
-          bill_id = bill["bill_id"]
-          existing_bill = Bill.where(legiscan_bill_id: bill_id).first
+        legiscan_bill_id = legiscan_response_bill["bill_id"]
+        existing_database_bill = Bill.where(legiscan_bill_id: legiscan_bill_id).first
 
-          if existing_bill && bill["status"] != existing_bill.status
-            # Change to logging
-            puts "===============**********==============="
-            puts "Updating bill #{existing_bill.title}"
-            new_status_integer = bill["status"].to_i
-            new_status_string = Bill.statuses.key(new_status_integer)
-            bill_detail = LegiscanApi.get_bill(bill_id)
-            bill_detail['texts'].each do |text|
-              if text['type'] == new_status_string
-                doc_id = text['doc_id']
-                full_text = LegiscanApi.new.get_bill_text(doc_id)
-                summary = OpenaiApi.new.legal_text_summary(full_text)
-                existing_bill.update!(summary: summary, legiscan_doc_id: doc_id)
-                break
-              end
-            end
-          elsif !existing_bill
-            # Change to logging
-            puts "===============**********==============="
-            puts "Creating bill with legiscan bill id #{bill_id}"
-            bill_detail = LegiscanApi.get_bill(bill_id)
-            bill_status_integer = bill['status'].to_i
-            bill_status_string = Bill.statuses.key(bill_status_integer)
-            bill_detail['texts'].each do |text|
-              if text['type'] == current_bill_status
-                doc_id = text['doc_id']
-                full_text = LegiscanApi.new.get_bill_text(doc_id)
-                summary = OpenaiApi.new.legal_text_summary(full_text)
-                status_last_updated = bill['status_date']
-                Bill.create!(status: bill_status_integer,
-                             status_last_updated: status_last_updated,
-                             summary: summary,
-                             legiscan_bill_id: bill_id,
-                             legiscan_doc_id: doc_id,
-                             session_id: session.id
-                            )
-                break
-              end
-            end
+        if existing_database_bill && bill_needs_updated?(legiscan_response_bill, existing_database_bill)
+          update_existing_bill_status_and_summary(legiscan_api, legiscan_response_bill, existing_database_bill)
+        elsif !existing_database_bill
+          create_new_bill(legiscan_api, legiscan_response_bill, session.id)
         end
       end
     end
+  end
+
+  def bill_needs_updated?(legiscan_response_bill, existing_database_bill)
+    existing_database_bill.status_before_type_cast != legiscan_response_bill['status'] ||
+    existing_database_bill.summary.nil?
+  end
+
+  def update_existing_bill_status_and_summary(legiscan_api, legiscan_response_bill, existing_database_bill)
+    legiscan_bill_id = legiscan_response_bill['bill_id']
+    legiscan_bill_detail = legiscan_api.get_bill(legiscan_bill_id)
+    new_status_integer = legiscan_response_bill["status"].to_i
+    new_status_string = Bill.statuses.key(new_status_integer)
+
+    legiscan_bill_detail['texts'].each do |text|
+      if text['type'].casecmp?(new_status_string)
+        doc_id = text['doc_id']
+        full_text = legiscan_api.get_bill_text(doc_id)
+        summary = OpenaiApi.new.legal_text_summary(full_text)
+        status_last_updated = DateTime.parse(legiscan_response_bill['status_date'])
+        existing_database_bill.update!(summary: summary, legiscan_doc_id: doc_id,
+                              status: new_status_integer, status_last_updated: status_last_updated)
+        break
+      end
+    end
+
+    Rails.logger.info "Updated bill with Title: #{existing_database_bill.title}, Id: #{existing_database_bill.id}"
+  rescue => e
+    Rails.logger.error "Error updating bill with Title: #{existing_database_bill.title}, Id: #{existing_database_bill.id}, Error: #{e.message}"
+  end
+
+  def create_new_bill(legiscan_api, legiscan_response_bill, session_id)
+    legiscan_bill_id = legiscan_response_bill['bill_id']
+    title = legiscan_response_bill['title']
+    legiscan_bill_detail = legiscan_api.get_bill(legiscan_bill_id)
+    bill_status_integer = legiscan_response_bill['status'].to_i
+    bill_status_string = Bill.statuses.key(bill_status_integer)
+    legiscan_bill_detail['texts'].each do |text|
+      if text['type'].casecmp?(bill_status_string)
+        doc_id = text['doc_id']
+        full_text = legiscan_api.get_bill_text(doc_id)
+        summary = OpenaiApi.new.legal_text_summary(full_text)
+        status_last_updated = DateTime.parse(legiscan_response_bill['status_date'])
+        database_bill = Bill.create!(status: bill_status_integer,
+                      status_last_updated: status_last_updated,
+                      summary: summary,
+                      legiscan_bill_id: legiscan_bill_id,
+                      legiscan_doc_id: doc_id,
+                      session_id: session_id
+                    )
+        break
+      end
+    end
+
+    Rails.logger.info "Created bill with Title: #{database_bill.title}, id: #{database_bill.id}"
+  rescue => e
+    Rails.logger.error "Error creating bill with Title: #{title}, Legiscan Bill Id: #{legiscan_bill_id}"
   end
 end
