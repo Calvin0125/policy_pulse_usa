@@ -44,6 +44,7 @@ class AddAndUpdateBills
               end
             end
           elsif !existing_bill
+            # Change to logging
             puts "===============**********==============="
             puts "Creating bill with legiscan bill id #{bill_id}"
             bill_detail = LegiscanApi.get_bill(bill_id)
