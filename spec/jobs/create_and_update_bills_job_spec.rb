@@ -40,4 +40,26 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       job.check_for_new_sessions(legiscan_api)
     end
   end
+
+  describe '#create_and_update_bills' do
+    let(:mock_bill_list) do
+      [
+        { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 1, 'status_date' => '2024-07-31' },
+        { 'bill_id' => 456, 'title' => 'Bill 2', 'status' => 2, 'status_date' => '2024-08-01' },
+        { 'bill_id' => 789, 'title' => 'Bill 3', 'status' => 3, 'status_date' => '2024-08-02' }
+        { 'bill_id' => 135, 'title' => 'Bill 4', 'status' => 4, 'status_date' => '2024-08-03' }
+      ]
+    end
+
+    # Mock response for 456 and 789 and 135
+    # Make status for 456 not match in database
+    # Make 789 have no summary in database
+    # Make 135 not exist in database
+    # Mock bill text response for 456, 789, and 135
+    # Make 135 have no text
+    # Mock AI summary for 456, 789.
+    # Test that 456 and 789 are updated, test 135 is created.
+    
+    # Then test each method individually
+  end
 end
