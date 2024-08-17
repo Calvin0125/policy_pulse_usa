@@ -51,6 +51,7 @@ gem 'redis'
 gem 'sidekiq'
 gem 'annotate'
 gem 'shoulda-matchers'
+gem 'factory_bot_rails'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

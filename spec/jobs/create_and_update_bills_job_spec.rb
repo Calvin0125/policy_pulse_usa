@@ -51,7 +51,9 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       ]
     end
 
-    # Mock response for 456 and 789 and 135
+    # Make 123 exist in database and not need to be updated
+    # Check that the code to update it is never reached
+    # Mock response for 456 and 789 and 135 bill detail
     # Make status for 456 not match in database
     # Make 789 have no summary in database
     # Make 135 not exist in database
@@ -60,6 +62,11 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
     # Mock AI summary for 456, 789.
     # Test that 456 and 789 are updated, test 135 is created.
     
-    # Then test each method individually
+    # Then test each method individually, mainly for the logging
+    # or could test logging in this test if you want
+
+    it 'creates and updates the bills' do
+      bill_1 = 
+    end
   end
 end
