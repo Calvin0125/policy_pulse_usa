@@ -164,7 +164,113 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
     end
   end
 
-  # TODO: Test bill_needs_updated?
-  # TODO: Test logging and error handling for update_existing_bill_status_and_summary
-  # TODO: Test logging and error handling for create_new_bill
+  describe '#bill_needs_updated?' do
+    it 'returns true if the statuses dont match' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 1, 'status_date' => '2024-08-01' }
+      database_bill = create(:bill, status: 2, summary: 'This is a summary')
+
+      expect(job.bill_needs_updated?(legiscan_response_bill, database_bill)).to eq(true)
+    end
+
+    it 'returns true if the database bill does not have a summary' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 1, 'status_date' => '2024-08-01' }
+      database_bill = create(:bill, status: 1, summary: nil)
+
+      expect(job.bill_needs_updated?(legiscan_response_bill, database_bill)).to eq(true)
+    end
+
+    it 'returns false if the statuses match and the bill has a summary' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 1, 'status_date' => '2024-08-01' }
+      database_bill = create(:bill, status: 1, summary: 'This is a summary') 
+
+      expect(job.bill_needs_updated?(legiscan_response_bill, database_bill)).to eq(false)
+    end
+  end
+
+  describe '#update_existing_bill_status_and_summary' do
+    # Other functionality is tested in #create_and_update_bills spec
+
+    let(:session) { create(:session) }
+
+    let(:mock_bill_123_detail_response) do
+      {
+        'bill_id' => 123,
+        'session_id' => session.legiscan_session_id,
+        'texts' => [
+          {
+            'doc_id' => 1234,
+            'type' => 'Engrossed'
+          }
+        ]
+      }
+    end
+
+    let(:mock_bill_123_text_response) { "This is the full text for Bill 1." }
+    let(:mock_bill_123_summary_response) { "This is the summary for Bill 1." }
+
+    before do
+      allow(legiscan_api).to receive(:get_bill).with(123).and_return(mock_bill_123_detail_response)
+      allow(legiscan_api).to receive(:get_bill_text).with(1234).and_return(mock_bill_123_text_response)
+      allow_any_instance_of(OpenaiApi).to receive(:legal_text_summary).with(mock_bill_123_text_response).and_return(mock_bill_123_summary_response)
+    end
+
+    it 'logs that the bill was updated' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 2, 'status_date' => '2024-08-01' } 
+      database_bill = create(:bill, legiscan_bill_id: 123, title: 'Bill 1', status: 1, status_last_updated: DateTime.new(2024, 8, 1))
+
+      expected_log_message = "Updated bill with Title: #{database_bill.title}, Id: #{database_bill.id}"
+      expect(Rails.logger).to receive(:info).with(expected_log_message)
+
+      job.update_existing_bill_status_and_summary(legiscan_api, legiscan_response_bill, database_bill)
+    end
+
+    it 'catches and logs an error' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 2, 'status_date' => '2024-08-01' } 
+      database_bill = create(:bill, legiscan_bill_id: 123, title: 'Bill 1', status: 1, status_last_updated: DateTime.new(2024, 8, 1))
+
+      error_message = "This is an error message."
+      allow(Bill).to receive(:statuses).and_raise(StandardError, error_message)
+      expected_log_message = "Error updating bill with Title: #{database_bill.title}, Id: #{database_bill.id}, Error: #{error_message}"
+      expect(Rails.logger).to receive(:error).with(expected_log_message)
+
+      job.update_existing_bill_status_and_summary(legiscan_api, legiscan_response_bill, database_bill)
+    end
+  end
+
+  describe '#create_new_bill' do
+    # Other functionality is tested in #create_and_update_bills spec
+
+    let(:session) { create(:session) }
+
+    let(:mock_bill_123_detail_response) do
+      {
+        'bill_id' => 123,
+        'session_id' => session.legiscan_session_id,
+        'texts' => []
+      }
+    end
+
+    before do
+      allow(legiscan_api).to receive(:get_bill).with(123).and_return(mock_bill_123_detail_response)
+    end
+
+    it 'logs that the bill was created' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 2, 'status_date' => '2024-08-01' } 
+      allow(Rails.logger).to receive(:info)
+      job.create_new_bill(legiscan_api, legiscan_response_bill, session.id)
+
+      new_bill = Bill.first
+      expect(Rails.logger).to have_received(:info).with("Created bill with Title: #{new_bill.title}, id: #{new_bill.id}")
+    end
+
+    it 'catches and logs an error' do
+      legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 2, 'status_date' => '2024-08-01' } 
+      allow(Rails.logger).to receive(:error)
+      error_message = "This is an error message."
+      allow(Bill).to receive(:statuses).and_raise(StandardError, error_message)
+      job.create_new_bill(legiscan_api, legiscan_response_bill, session.id)
+
+      expect(Rails.logger).to have_received(:error).with("Error creating bill with Title: Bill 1, Legiscan Bill Id: 123, Error: #{error_message}") 
+    end
+  end
 end
