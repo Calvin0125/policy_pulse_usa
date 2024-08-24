@@ -52,6 +52,7 @@ gem 'sidekiq'
 gem 'annotate'
 gem 'shoulda-matchers'
 gem 'factory_bot_rails'
+gem 'will_paginate'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
