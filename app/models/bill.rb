@@ -29,7 +29,7 @@
 class Bill < ApplicationRecord
   belongs_to :session
 
-  enum status: { introduced: 1, engrossed: 2, enrolled: 3, passed: 4, vetoed: 5 }
+  enum status: { introduced: 1, engrossed: 2, enrolled: 3, passed: 4, vetoed: 5, failed: 6 }
 
   def formatted_bill
     {

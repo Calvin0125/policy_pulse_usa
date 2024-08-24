@@ -29,7 +29,7 @@
 
 FactoryBot.define do
   factory :bill do
-    status { [1, 2, 3, 4].sample }
+    status { [1, 2, 3, 4, 5, 6].sample }
     status_last_updated { DateTime.now }
     summary { 'This is a summary of a bill.' }
     sequence(:title) { |n| "Bill #{n}" }
