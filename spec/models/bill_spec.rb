@@ -30,4 +30,26 @@ RSpec.describe Bill, type: :model do
   describe 'relationships' do
     it { is_expected.to belong_to(:session) }
   end
+
+  describe 'instance_methods' do
+    describe '#formatted_bill' do
+      it 'returns the expected hash' do
+        bill = create(:bill)
+        expected_formatted_bill = {
+          title: bill.title,
+          status: bill.status,
+          status_last_updated: bill.iso_8601_formatted_date(bill.status_last_updated),
+          summary: bill.summary
+        }
+        expect(bill.formatted_bill).to eq(expected_formatted_bill)
+      end
+    end
+
+    describe '#iso_8601_formatted_date' do
+      it 'returns the iso 8601 formatted date' do
+        bill = create(:bill)
+        expect(bill.iso_8601_formatted_date(bill.created_at)).to eq(bill.created_at.strftime('%Y-%m-%d'))
+      end
+    end
+  end
 end

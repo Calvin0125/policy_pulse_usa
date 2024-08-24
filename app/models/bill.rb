@@ -28,4 +28,17 @@ class Bill < ApplicationRecord
   belongs_to :session
 
   enum status: { introduced: 1, engrossed: 2, enrolled: 3, passed: 4, vetoed: 5 }
+
+  def formatted_bill
+    {
+      title: title,
+      status: status,
+      status_last_updated: iso_8601_formatted_date(status_last_updated),
+      summary: summary
+    }
+  end
+
+  def iso_8601_formatted_date(date)
+    date.strftime('%Y-%m-%d') 
+  end
 end
