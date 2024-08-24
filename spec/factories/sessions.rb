@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: sessions
@@ -18,6 +20,6 @@ FactoryBot.define do
   factory :session do
     start_date { Time.current.beginning_of_year.to_datetime }
     end_date { Time.current.end_of_year.to_datetime }
-    sequence(:legiscan_session_id) { |n| "#{n}#{n + 1}#{n + 2}"}
+    sequence(:legiscan_session_id) { |n| "#{n}#{n + 1}#{n + 2}" }
   end
 end

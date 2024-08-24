@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: bills
@@ -31,14 +33,14 @@ class Bill < ApplicationRecord
 
   def formatted_bill
     {
-      title: title,
-      status: status,
+      title:,
+      status:,
       status_last_updated: iso_8601_formatted_date(status_last_updated),
-      summary: summary
+      summary:
     }
   end
 
   def iso_8601_formatted_date(date)
-    date.strftime('%Y-%m-%d') 
+    date.strftime('%Y-%m-%d')
   end
 end

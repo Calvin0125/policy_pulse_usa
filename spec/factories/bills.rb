@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: bills
@@ -29,10 +31,10 @@ FactoryBot.define do
   factory :bill do
     status { [1, 2, 3, 4].sample }
     status_last_updated { DateTime.now }
-    summary { "This is a summary of a bill." }
-    sequence(:title) { |n| "Bill #{n}"}
-    sequence(:legiscan_bill_id) { |n| "#{n}#{n + 1}#{n + 2}"}
-    sequence(:legiscan_doc_id) { |n| "#{n}#{n + 1}#{n + 2}"}
+    summary { 'This is a summary of a bill.' }
+    sequence(:title) { |n| "Bill #{n}" }
+    sequence(:legiscan_bill_id) { |n| "#{n}#{n + 1}#{n + 2}" }
+    sequence(:legiscan_doc_id) { |n| "#{n}#{n + 1}#{n + 2}" }
     session { create(:session) }
   end
 end

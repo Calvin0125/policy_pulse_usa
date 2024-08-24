@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUniqueConstraints < ActiveRecord::Migration[7.0]
   def change
     add_index :bills, :legiscan_bill_id, unique: true

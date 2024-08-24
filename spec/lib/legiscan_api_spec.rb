@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe LegiscanApi do
@@ -25,7 +27,7 @@ RSpec.describe LegiscanApi do
 
   describe '#get_bill', :vcr do
     it 'returns a bill hash for a given bill_id' do
-      bill_id = 1741372
+      bill_id = 1_741_372
       bill = api.get_bill(bill_id)
       expect(bill).to be_a(Hash)
       expect(bill).to have_key('status')
@@ -36,7 +38,7 @@ RSpec.describe LegiscanApi do
 
   describe '#get_bill_text', :vcr do
     it 'returns the text of the bill for a given doc_id' do
-      doc_id = 2746931
+      doc_id = 2_746_931
       text = api.get_bill_text(doc_id)
       expect(text).to be_a(String)
       expect(text).not_to be_empty

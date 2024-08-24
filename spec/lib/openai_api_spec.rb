@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OpenaiApi, type: :model do
@@ -28,9 +30,12 @@ RSpec.describe OpenaiApi, type: :model do
     end
 
     it 'raises an error if the text is too long' do
-      long_text = 'a' * 48001
+      long_text = 'a' * 48_001
 
-      expect { openai_api.legal_text_part_summary(long_text) }.to raise_error(StandardError, 'Text must be < 48,000 chars for part summary')
+      expect do
+        openai_api.legal_text_part_summary(long_text)
+      end.to raise_error(StandardError,
+                         'Text must be < 48,000 chars for part summary')
     end
   end
 
@@ -43,11 +48,11 @@ RSpec.describe OpenaiApi, type: :model do
       combined_summary_prompt = <<~TEXT
         You will be given multiple summaries of parts of the same legal text. Generate a 3
         paragraph summary of the summaries. The first paragraph should begin with the phrase 'This bill'
-        and include the purpose of the bill, provisions, and rights and obligations conferred. 
-        The second paragraph should go more in depth than the first paragraph and include any 
+        and include the purpose of the bill, provisions, and rights and obligations conferred.#{' '}
+        The second paragraph should go more in depth than the first paragraph and include any#{' '}
         relevant information the average American would want to know that was not included in the
         first paragraph. The third paragraph should include effective dates if known, repercussions
-        for non-compliance, and any notable exceptions. 
+        for non-compliance, and any notable exceptions.#{' '}
         Here are the summaries, joined by the phrase NEXT SUMMARY. This is a part summary. NEXT SUMMARY This is a part summary.
       TEXT
 

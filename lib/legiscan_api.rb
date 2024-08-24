@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LegiscanApi
   def initialize
     @api_key = Rails.application.credentials.legiscan_api_key
@@ -37,14 +39,14 @@ class LegiscanApi
     #   "status_date" => "2023-03-14",
     #   "status" => 1,
     #   "last_action_date" => "2023-03-30",
-    #   "last_action" => "The Clerk was authorized to correct section numbers, punctuation, and cross references, and to make other necessary technical and conforming corrections in the engrossment of H.R. 1.",
-    #   "title" => "Water Quality Certification and Energy Project Improvement Act of 2023 TAPP American Resources Act Transparency, Accountability, Permitting, and Production of American Resources Act",
-    #   "description" => "To lower energy costs by increasing American energy production, exports, infrastructure, and critical minerals processing, by promoting transparency, accountability, permitting, and production of American resources, and by improving water quality certification and energy projects, and for other purposes."
+    #   "last_action" => "The Clerk was authorized to correct section numbers..."
+    #   "title" => "Water Quality Certification and Energy Project Improvement Act..."
+    #   "description" => "To lower energy costs by increasing American energy production..."
     # }
     response = HTTP.get("https://api.legiscan.com/?key=#{@api_key}&op=getMasterList&id=#{session_id}")
     master_list = JSON.parse(response.body)['masterlist']
     # First key/value pair in the response is the session, all after that are bills
-    master_list.values[1..-1]
+    master_list.values[1..]
   end
 
   def get_bill(bill_id)
@@ -61,7 +63,7 @@ class LegiscanApi
     pdf_io = StringIO.new(decoded_text)
     pdf_reader = PDF::Reader.new(pdf_io)
 
-    text = ""
+    text = ''
     pdf_reader.pages.each do |page|
       text += page.text
     end

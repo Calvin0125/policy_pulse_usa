@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BillsController < ApplicationController
   BILLS_PER_PAGE = 10
 
@@ -6,7 +8,7 @@ class BillsController < ApplicationController
                 .paginate(page: bill_params[:page], per_page: BILLS_PER_PAGE)
                 .map(&:formatted_bill)
 
-    render json: { bills: bills }
+    render json: { bills: }
   end
 
   private
