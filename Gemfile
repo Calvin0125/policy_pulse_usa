@@ -53,9 +53,9 @@ gem 'redis'
 gem 'shoulda-matchers'
 gem 'sidekiq'
 gem 'vcr'
+gem 'vite_rails'
 gem 'webmock'
 gem 'will_paginate'
-gem 'vite_rails'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get '/', to: 'home#index'
-  get '*path', to: 'home#index', constraints: ->(request) do
+  get '*path', to: 'home#index', constraints: lambda { |request|
     !request.xhr? && request.format.html?
-  end
+  }
 
   get '/bills', to: 'bills#index'
 end
