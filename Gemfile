@@ -55,6 +55,7 @@ gem 'sidekiq'
 gem 'vcr'
 gem 'webmock'
 gem 'will_paginate'
+gem 'vite_rails'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
