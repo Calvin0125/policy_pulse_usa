@@ -95,13 +95,13 @@ class CreateAndUpdateBillsJob < ApplicationJob
       doc_id = text['doc_id']
       full_text = legiscan_api.get_bill_text(doc_id)
       summary = OpenaiApi.new.legal_text_summary(full_text)
-      Bill.create!(status: bill_status_integer,
-                   status_last_updated:,
-                   title:,
-                   summary:,
-                   legiscan_doc_id: doc_id,
-                   legiscan_bill_id:,
-                   session_id:)
+      database_bill = Bill.create!(status: bill_status_integer,
+                                   status_last_updated:,
+                                   title:,
+                                   summary:,
+                                   legiscan_doc_id: doc_id,
+                                   legiscan_bill_id:,
+                                   session_id:)
       text_exists = true
       break
     end
