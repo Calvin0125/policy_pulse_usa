@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
-    "vue": "^3.4.38"
+    "vue": "^3.4.38",
+    "vuetify": "^3.7.1"
   }
 }
