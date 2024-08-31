@@ -88,6 +88,7 @@ class CreateAndUpdateBillsJob < ApplicationJob
     bill_status_string = Bill.statuses.key(bill_status_integer)
     status_last_updated = DateTime.parse(legiscan_response_bill['status_date'])
     text_exists = false
+    database_bill = nil
 
     legiscan_bill_detail['texts'].each do |text|
       next unless text['type'].casecmp?(bill_status_string)
