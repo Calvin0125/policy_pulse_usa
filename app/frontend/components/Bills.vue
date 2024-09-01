@@ -25,9 +25,13 @@
             <v-card-title class="bill-title">{{ bill.title }}</v-card-title>
             <v-card-subtitle class="bill-attribute">Status: {{ capitalize(bill.status) }}</v-card-subtitle>
             <v-card-subtitle class="bill-attribute">Status Date: {{ bill.status_last_updated }}</v-card-subtitle>
-            <v-card-text class="bill-attribute">
-              {{ bill.summary || "Text not available yet." }}
+            <v-card-text v-if="bill.summary" class="bill-attribute">
+              <div v-for="(billSummaryPart, index) in bill.summary.split(`\n\n`)">
+                <p>{{ billSummaryPart }}</p>
+                <br>
+              </div>
             </v-card-text>
+            <v-card-text v-else class="bill-attribute">Text not available yet.</v-card-text>
           </v-card>
         </v-col>
       </v-row>
