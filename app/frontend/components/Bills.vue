@@ -2,7 +2,16 @@
   <div id="background">
     <v-container class="d-flex flex-column align-center justify-center">
       <h1 class="page-title mb-3">Policy Pulse USA</h1>
-      <img width="20%" src="../assets/images/usa_flag.svg" alt="American Flag" />
+      <img width="20%" src="../assets/images/usa_flag.svg" alt="American Flag" class="mb-3"/>
+      <div class="pagination-controls">
+        <v-btn @click="goToPreviousPage" :disabled="currentPage === 1">
+          Previous
+        </v-btn>
+        <span class="page-indicator">Page {{ currentPage }}</span>
+        <v-btn @click="goToNextPage">
+          Next
+        </v-btn>
+      </div>
       <h3 class="mt-4">Federal Bills Ordered by Most Recently Created or Updated</h3>
     </v-container>
     <v-container>
@@ -32,6 +41,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      currentPage: 1,
       bills: []
     };
   },
@@ -40,11 +50,19 @@ export default {
   },
   methods: {
     async fetchBills() {
-      const response = await axios.get('/bills', { headers: { 'Accept': 'application/json' }, params: { page: 1 } });
+      const response = await axios.get('/bills', { headers: { 'Accept': 'application/json' }, params: { page: this.currentPage } });
       this.bills = response.data.bills;
     },
     capitalize(string) {
       return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    },
+    goToNextPage() {
+      this.currentPage += 1;
+      this.fetchBills();
+    },
+    goToPreviousPage() {
+      this.currentPage -= 1;
+      this.fetchBills();
     }
   }
 }
@@ -53,6 +71,12 @@ export default {
 <style scoped>
 * {
   color: #e0e0e0;
+}
+
+#background {
+  background-color: #2c2c2c;
+  margin: 0;
+  padding: 0;
 }
 
 .page-title {
@@ -74,9 +98,15 @@ export default {
   background-color: #505050;
 }
 
-#background {
-  background-color: #2c2c2c;
-  margin: 0;
-  padding: 0;
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.page-indicator {
+  margin: 0 15px;
+  font-size: 1.2rem;
 }
 </style>
