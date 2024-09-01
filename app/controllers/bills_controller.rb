@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BillsController < ApplicationController
-  BILLS_PER_PAGE = 10
+  BILLS_PER_PAGE = 5
 
   def index
     bills = Bill.order(status_last_updated: :desc)
