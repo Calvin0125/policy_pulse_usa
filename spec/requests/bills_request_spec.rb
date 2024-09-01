@@ -9,8 +9,10 @@ RSpec.describe 'BillsController', type: :request do
     end
   end
 
+  let(:headers) { { 'Accept' => 'application/json' } }
+
   it 'returns the first page of bills ordered by status_last_updated descending' do
-    get '/bills', params: { page: 1 }
+    get('/bills', params: { page: 1 }, headers:)
 
     expect(response).to have_http_status(:ok)
     json_response = JSON.parse(response.body)
@@ -22,7 +24,7 @@ RSpec.describe 'BillsController', type: :request do
   end
 
   it 'returns the second page of bills ordered by status_last_updated descending' do
-    get '/bills', params: { page: 2 }
+    get('/bills', params: { page: 2 }, headers:)
 
     expect(response).to have_http_status(:ok)
     json_response = JSON.parse(response.body)

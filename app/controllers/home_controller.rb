@@ -2,8 +2,8 @@
 
 class HomeController < ApplicationController
   def index
-    if params[:path] && params[:path] != '/'
-      redirect_to '/'
-    end
+    return unless params[:path] && params[:path] != '/'
+
+    redirect_to '/'
   end
 end
