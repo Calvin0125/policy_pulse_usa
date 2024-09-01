@@ -34,11 +34,12 @@ class OpenaiApi
     prompt = <<~TEXT
       You will be given multiple summaries of parts of the same legal text. Generate a 3
       paragraph summary of the summaries. The first paragraph should begin with the phrase 'This bill'
-      and include the purpose of the bill, provisions, and rights and obligations conferred.#{' '}
-      The second paragraph should go more in depth than the first paragraph and include any#{' '}
+      and include the purpose of the bill, provisions, and rights and obligations conferred.
+      The second paragraph should go more in depth than the first paragraph and include any
       relevant information the average American would want to know that was not included in the
       first paragraph. The third paragraph should include effective dates if known, repercussions
-      for non-compliance, and any notable exceptions.#{' '}
+      for non-compliance, and any notable exceptions. Please do not include the phrase 'NEXT SUMMARY' in
+      your final summary.
       Here are the summaries, joined by the phrase NEXT SUMMARY. #{part_summaries.join(' NEXT SUMMARY ')}
     TEXT
 
