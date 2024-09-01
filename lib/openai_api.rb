@@ -39,7 +39,7 @@ class OpenaiApi
       relevant information the average American would want to know that was not included in the
       first paragraph. The third paragraph should include effective dates if known, repercussions
       for non-compliance, and any notable exceptions. Please do not include the phrase 'NEXT SUMMARY' in
-      your final summary.
+      your final summary. Please make sure to separate each paragraph with two newline characters.
       Here are the summaries, joined by the phrase NEXT SUMMARY. #{part_summaries.join(' NEXT SUMMARY ')}
     TEXT
 
