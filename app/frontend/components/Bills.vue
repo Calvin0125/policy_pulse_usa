@@ -1,5 +1,6 @@
 <template>
   <div id="background">
+    <info-modal ref="infoModal"></info-modal>
     <v-container class="d-flex flex-column align-center justify-center">
       <h1 class="page-title mb-3">Policy Pulse USA</h1>
       <img width="20%" src="../assets/images/usa_flag.svg" alt="American Flag" class="mb-3"/>
@@ -12,7 +13,15 @@
           Next
         </v-btn>
       </div>
-      <h3 class="mt-4">Federal Bills Ordered by Most Recently Created or Updated</h3>
+      <v-row class="mt-3">
+        <v-col cols="auto">
+          <v-icon @click="openInfoModal" class="clickable mb-0">mdi-information</v-icon>
+        </v-col>
+        <v-col>
+          <h3>Federal Bills Ordered by Most Recently Created or Updated</h3>
+        </v-col>
+        <v-col cols="auto"></v-col>
+      </v-row>
     </v-container>
     <v-container>
       <v-row>
@@ -21,7 +30,7 @@
           :key="index"
           cols="12"
         >
-          <v-card class="mx-auto bill-card" max-width="800">
+          <v-card class="mx-auto bill-card">
             <v-card-title class="bill-title">{{ bill.title }}</v-card-title>
             <v-card-subtitle class="bill-attribute">Status: {{ capitalize(bill.status) }}</v-card-subtitle>
             <v-card-subtitle class="bill-attribute">Status Date: {{ bill.status_last_updated }}</v-card-subtitle>
@@ -41,8 +50,12 @@
 
 <script>
 import axios from 'axios';
+import InfoModal from './InfoModal.vue'
 
 export default {
+  components: {
+    InfoModal,
+  },
   data() {
     return {
       currentPage: 1,
@@ -56,6 +69,9 @@ export default {
     async fetchBills() {
       const response = await axios.get('/bills', { headers: { 'Accept': 'application/json' }, params: { page: this.currentPage } });
       this.bills = response.data.bills;
+    },
+    openInfoModal() {
+      this.$refs.infoModal.showModal = true;
     },
     capitalize(string) {
       return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();

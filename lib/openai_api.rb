@@ -53,8 +53,8 @@ class OpenaiApi
     raise StandardError, 'Text must be < 48,000 chars for part summary' if text.length > 48_000
 
     prompt = <<~TEXT
-      Please summarize the following part of a legal text.#{' '}
-      The summary should include the main purpose and objective of#{' '}
+      Please summarize the following part of a legal text.
+      The summary should include the main purpose and objective of
       this section, key provisions, and rights and obligations conferred or imposed.
       If this section includes effective dates, repercussions for non-compliance, and any
       notable exceptions, please state those. Use complete sentences and clear and concise language,
