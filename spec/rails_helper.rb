@@ -40,6 +40,11 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+VCR.configure do |config|
+  config.filter_sensitive_data('<API_KEY>') { Rails.application.credentials.openai_api_key }
+  config.filter_sensitive_data('<API_KEY>') { Rails.application.credentials.legiscan_api_key }
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures')

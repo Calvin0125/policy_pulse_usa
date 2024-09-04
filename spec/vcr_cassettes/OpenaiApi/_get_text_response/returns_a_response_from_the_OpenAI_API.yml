@@ -11,7 +11,7 @@ http_interactions:
       Content-Type:
       - application/json
       Authorization:
-      - Bearer sk-proj-NMC2n3CPBV8jZjLIxMfyT3BlbkFJhdkbq51aaWjj7dad3aTa
+      - Bearer <API_KEY>
       Connection:
       - close
       Host:
@@ -24,63 +24,68 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 06 Jul 2024 23:55:19 GMT
+      - Wed, 04 Sep 2024 22:52:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - close
+      Access-Control-Expose-Headers:
+      - X-Request-ID
       Openai-Organization:
       - user-ht1wzcr71rpyrbyuxbiv7yws
       Openai-Processing-Ms:
-      - '511'
+      - '143'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
       X-Ratelimit-Limit-Requests:
-      - '10000'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '60000'
+      - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '59975'
+      - '1999975'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 25ms
+      - 0s
       X-Request-Id:
-      - req_e10f2e0573dc5ec248c7a9fa55f2b6ee
+      - req_a805d9e43b68e65b9943dee17b4c2a4d
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=bI_FQWHtIx5stmbAUPKag7CKTxWl35.8U_.SrRfG2iU-1720310119-1.0.1.1-Z.ylAGAEy.OyS2XnXxRC5w5W_Uh3rh100Ck_KKn.iIAJST2rj08KZGF7ksZIzRczw6rPtxB5JCIqtF8LKOQ0qw;
-        path=/; expires=Sun, 07-Jul-24 00:25:19 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=YGQ89CYYf75jNoZ2D94GtFVJrwUsPG6HGQ5ZigQPixM-1725490368-1.0.1.1-xoUuAhKff4vjz0mCoGVqbLYjC2.yNoJB9MQetVbAbL88oNSyXDY18aVXJXOQ9XGiOPREKNWBTVR5BNq40hQWTQ;
+        path=/; expires=Wed, 04-Sep-24 23:22:48 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=zeAdbYnZTHbD3Y2kNZd7tGvxNtTe2mwzwMVPZghQNiw-1720310119836-0.0.1.1-604800000;
+      - _cfuvid=goHMMtuGTgtfLEfO8FFmYE64JPX9E6UwRNL5ut8_hHw-1725490368531-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
-      - 89f386647aeb4695-DFW
+      - 8be18d4f9db11f3c-DEN
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "chatcmpl-9i9XLKLUvJFbGWEUdq9daeqrIzjSK",
+          "id": "chatcmpl-A3t9kp8TvsXYYdo4H0M9E3NaFSSoG",
           "object": "chat.completion",
-          "created": 1720310119,
+          "created": 1725490368,
           "model": "gpt-3.5-turbo-0125",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The capital of France is Paris."
+                "content": "The capital of France is Paris.",
+                "refusal": null
               },
               "logprobs": null,
               "finish_reason": "stop"
@@ -93,5 +98,5 @@ http_interactions:
           },
           "system_fingerprint": null
         }
-  recorded_at: Sat, 06 Jul 2024 23:55:19 GMT
+  recorded_at: Wed, 04 Sep 2024 22:52:48 GMT
 recorded_with: VCR 6.2.0
