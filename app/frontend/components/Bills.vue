@@ -112,10 +112,11 @@ export default {
 
 .bill-attribute {
   font-size: 1rem;
+  opacity: 1;
 }
 
 .bill-card {
-  background-color: #505050;
+  background-color: #3a3a3a;
 }
 
 .pagination-controls {

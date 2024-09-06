@@ -7,7 +7,7 @@
             <v-icon @click="showModal = false" class="custom-color-icon mt-3 ml-3">mdi-close</v-icon>
           </v-col>
           <v-col>
-            <v-card-title class="headline text-center">Frequently Asked Questions</v-card-title>
+            <v-card-title class="headline text-center"><b>Frequently Asked Questions</b></v-card-title>
           </v-col>
           <v-col cols="auto"></v-col>
         </v-row>
@@ -33,10 +33,10 @@ export default {
   name: "InfoModal",
   data() {
     return {
-      showModal: true,
+      showModal: false,
       questions: [
         {
-          title: 'Where does your information come from?',
+          title: 'Where does your data come from?',
           answer: `The laws are retrieved from 
                   <a href="https://legiscan.com/legiscan" style="color: #e0e0e0;" 
                   target="_blank">LegiScan</a>. If the full text is
@@ -48,7 +48,7 @@ export default {
                   with a lawyer.`
         },
         {
-          title: 'How often is it updated?',
+          title: 'How often is your data updated?',
           answer: `LegiScan is queried daily to check for new laws and updates to 
                   the status or text of existing laws. If a new text is available, 
                   a new summary will be generated.`
@@ -111,7 +111,7 @@ a {
   color: #e0e0e0;
 }
 .modal-background {
-  background-color: #505050;
+  background-color: #3a3a3a;
 }
 .custom-color-icon {
   color: #e0e0e0;
