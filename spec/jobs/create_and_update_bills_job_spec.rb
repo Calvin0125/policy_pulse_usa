@@ -6,6 +6,24 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
   let(:job) { described_class.new }
   let(:legiscan_api) { LegiscanApi.new }
 
+  describe '#perform' do
+    let(:legiscan_api) { instance_double('LegiscanApi') }
+    let(:described_class_instance) { described_class.new }
+
+    before do
+      allow(described_class_instance).to receive(:check_for_new_sessions)
+      allow(described_class_instance).to receive(:create_and_update_bills)
+      allow(LegiscanApi).to receive(:new).and_return(legiscan_api)
+    end
+
+    it 'calls check_for_new_sessions with legiscan_api' do
+      described_class_instance.perform_now
+
+      expect(described_class_instance).to have_received(:check_for_new_sessions).with(legiscan_api)
+      expect(described_class_instance).to have_received(:create_and_update_bills).with(legiscan_api)
+    end
+  end
+
   describe '#check_for_new_sessions' do
     let(:session_cutoff_year) { CreateAndUpdateBillsJob::SESSION_CUTOFF_YEAR }
     let(:mock_session_response) do
@@ -61,11 +79,12 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       [
         { 'bill_id' => 789, 'title' => 'Bill 3', 'status' => 1, 'status_date' => '2024-08-02' },
         { 'bill_id' => 135, 'title' => 'Bill 4', 'status' => 3, 'status_date' => '2024-08-03' },
-        { 'bill_id' => 246, 'title' => 'Bill 5', 'status' => 1, 'status_date' => '2024-07-31' }
+        { 'bill_id' => 246, 'title' => 'Bill 5', 'status' => 1, 'status_date' => '2024-08-04' },
+        { 'bill_id' => 357, 'title' => 'Bill 6', 'status' => 1, 'status_date' => '2024-07-31' }
       ]
     end
 
-    let(:mock_bill456_detail_response) do
+    let(:mock_bill_2_detail_response) do
       {
         'bill_id' => 456,
         'session_id' => session1.legiscan_session_id,
@@ -86,7 +105,7 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       }
     end
 
-    let(:mock_bill_789_detail_response) do
+    let(:mock_bill_3_detail_response) do
       {
         'bill_id' => 789,
         'session_id' => session2.legiscan_session_id,
@@ -99,7 +118,7 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       }
     end
 
-    let(:mock_bill135_detail_response) do
+    let(:mock_bill_4_detail_response) do
       {
         'bill_id' => 135,
         'session_id' => session2.legiscan_session_id,
@@ -107,10 +126,25 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       }
     end
 
-    let(:mock_bill456_text_response) { 'This is the full text for Bill 2.' }
-    let(:mock_bill_789_text_response) { 'This is the full text for Bill 3.' }
-    let(:mock_bill456_summary_response) { 'This is the summary for Bill 2.' }
-    let(:mock_bill_789_summary_response) { 'This is the summary for Bill 3.' }
+    let(:mock_bill_5_detail_response) do
+      {
+        'bill_id' => 246,
+        'session_id' => session2.legiscan_session_id,
+        'texts' => [
+          {
+            'doc_id' => 5678,
+            'type' => 'Introduced'
+          }
+        ]
+      }
+    end
+
+    let(:mock_bill_2_text_response) { 'This is the full text for Bill 2.' }
+    let(:mock_bill_3_text_response) { 'This is the full text for Bill 3.' }
+    let(:mock_bill_5_text_response) { 'This is the full text for Bill 5' }
+    let(:mock_bill_2_summary_response) { 'This is the summary for Bill 2.' }
+    let(:mock_bill_3_summary_response) { 'This is the summary for Bill 3.' }
+    let(:mock_bill_5_summary_response) { 'This is the summary for Bill 5' }
 
     before do
       allow(legiscan_api).to receive(:get_bill_list)
@@ -119,17 +153,23 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       allow(legiscan_api).to receive(:get_bill_list)
         .with(session2.legiscan_session_id)
         .and_return(mock_bill_list_response2)
-      allow(legiscan_api).to receive(:get_bill).with(456).and_return(mock_bill456_detail_response)
-      allow(legiscan_api).to receive(:get_bill).with(789).and_return(mock_bill_789_detail_response)
-      allow(legiscan_api).to receive(:get_bill).with(135).and_return(mock_bill135_detail_response)
-      allow(legiscan_api).to receive(:get_bill_text).with(3456).and_return(mock_bill456_text_response)
-      allow(legiscan_api).to receive(:get_bill_text).with(4567).and_return(mock_bill_789_text_response)
+      allow(legiscan_api).to receive(:get_bill).with(456).and_return(mock_bill_2_detail_response)
+      allow(legiscan_api).to receive(:get_bill).with(789).and_return(mock_bill_3_detail_response)
+      allow(legiscan_api).to receive(:get_bill).with(135).and_return(mock_bill_4_detail_response)
+      allow(legiscan_api).to receive(:get_bill).with(246).and_return(mock_bill_5_detail_response)
+      allow(legiscan_api).to receive(:get_bill_text).with(3456).and_return(mock_bill_2_text_response)
+      allow(legiscan_api).to receive(:get_bill_text).with(4567).and_return(mock_bill_3_text_response)
+      allow(legiscan_api).to receive(:get_bill_text).with(5678).and_return(mock_bill_5_text_response)
+
       allow_any_instance_of(OpenaiApi).to receive(:legal_text_summary)
-        .with(mock_bill456_text_response)
-        .and_return(mock_bill456_summary_response)
+        .with(mock_bill_2_text_response)
+        .and_return(mock_bill_2_summary_response)
       allow_any_instance_of(OpenaiApi).to receive(:legal_text_summary)
-        .with(mock_bill_789_text_response)
-        .and_return(mock_bill_789_summary_response)
+        .with(mock_bill_3_text_response)
+        .and_return(mock_bill_3_summary_response)
+      allow_any_instance_of(OpenaiApi).to receive(:legal_text_summary)
+        .with(mock_bill_5_text_response)
+        .and_return(mock_bill_5_summary_response)
     end
 
     it 'creates and updates the bills' do
@@ -150,15 +190,15 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
 
       job.create_and_update_bills(legiscan_api)
 
-      expect(Bill.count).to eq(4)
+      expect(Bill.count).to eq(5)
 
       expect(bill1.reload.updated_at).to eq(bill1_updated_at)
 
       expect(bill2.reload.status).to eq('enrolled')
       expect(bill2.status_last_updated).to eq(DateTime.new(2024, 8, 1))
-      expect(bill2.summary).to eq(mock_bill456_summary_response)
+      expect(bill2.summary).to eq(mock_bill_2_summary_response)
 
-      expect(bill3.reload.summary).to eq(mock_bill_789_summary_response)
+      expect(bill3.reload.summary).to eq(mock_bill_3_summary_response)
       expect(bill3.status).to eq('introduced')
       expect(bill3.status_last_updated).to eq(DateTime.new(2024, 8, 2))
 
@@ -170,10 +210,18 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       expect(bill4.status_last_updated).to eq(DateTime.new(2024, 8, 3))
       expect(bill4.session_id).to eq(session2.id)
 
-      # Bill 5 should not exist because the status date is before
-      # the bill cutoff date
       bill5 = Bill.where(legiscan_bill_id: 246).first
-      expect(bill5).to be_nil
+      expect(bill5).to be_present
+      expect(bill5.summary).to eq(mock_bill_5_summary_response)
+      expect(bill5.title).to eq('Bill 5')
+      expect(bill5.status).to eq('introduced')
+      expect(bill5.status_last_updated).to eq(DateTime.new(2024, 8, 4))
+      expect(bill5.session_id).to eq(session2.id)
+
+      # Bill 6 should not exist because the status date is before
+      # the bill cutoff date
+      bill6 = Bill.where(legiscan_bill_id: 357).first
+      expect(bill6).to be_nil
     end
   end
 
