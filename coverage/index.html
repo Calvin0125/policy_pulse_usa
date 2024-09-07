@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-09-05T18:39:38-06:00">2024-09-05T18:39:38-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-09-07T15:35:56-06:00">2024-09-07T15:35:56-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -30,7 +30,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.52
+         3.46
        </span>
     </span> hits/line
     )
@@ -43,8 +43,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>137</b> relevant lines,
-    <span class="green"><b>137</b> lines covered</span> and
+    <b>140</b> relevant lines,
+    <span class="green"><b>140</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed. </span>
     (<span class="green">
   100.0%
@@ -117,11 +117,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#3de0379b6e2491dec2ee8699f9d633277aad0786" class="src_link" title="app/jobs/create_and_update_bills_job.rb">app/jobs/create_and_update_bills_job.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">124</td>
-            <td class="cell--number">67</td>
-            <td class="cell--number">67</td>
+            <td class="cell--number">127</td>
+            <td class="cell--number">70</td>
+            <td class="cell--number">70</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">2.39</td>
+            <td class="cell--number">2.33</td>
             
           </tr>
         
@@ -555,7 +555,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.37
+         2.31
        </span>
     </span> hits/line
     )
@@ -568,8 +568,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>68</b> relevant lines,
-    <span class="green"><b>68</b> lines covered</span> and
+    <b>71</b> relevant lines,
+    <span class="green"><b>71</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed. </span>
     (<span class="green">
   100.0%
@@ -609,11 +609,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#3de0379b6e2491dec2ee8699f9d633277aad0786" class="src_link" title="app/jobs/create_and_update_bills_job.rb">app/jobs/create_and_update_bills_job.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">124</td>
-            <td class="cell--number">67</td>
-            <td class="cell--number">67</td>
+            <td class="cell--number">127</td>
+            <td class="cell--number">70</td>
+            <td class="cell--number">70</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">2.39</td>
+            <td class="cell--number">2.33</td>
             
           </tr>
         
@@ -1302,8 +1302,8 @@
     
 
     <div class="t-line-summary">
-      <b>67</b> relevant lines.
-      <span class="green"><b>67</b> lines covered</span> and
+      <b>70</b> relevant lines.
+      <span class="green"><b>70</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
 
@@ -1678,13 +1678,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="34">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="34">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    Sentry.capture_message(error_log_message)</code>
           </li>
         </div>
       
@@ -1695,18 +1695,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="36">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="36">
+            
             
 
             
 
-            <code class="ruby">  def create_and_update_bills(legiscan_api)</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -1717,12 +1717,23 @@
 
             
 
+            <code class="ruby">  def create_and_update_bills(legiscan_api)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="38">
+            <span class="hits">1</span>
+            
+
+            
+
             <code class="ruby">    Session.where(&#39;end_date &gt; ?&#39;, Time.now).each do |session|</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="38">
+          <li class="covered" data-hits="2" data-linenumber="39">
             <span class="hits">2</span>
             
 
@@ -1733,7 +1744,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="39">
+          <li class="covered" data-hits="6" data-linenumber="40">
             <span class="hits">6</span>
             
 
@@ -1744,24 +1755,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="40">
+          <li class="never" data-hits="" data-linenumber="41">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="5" data-linenumber="41">
-            <span class="hits">5</span>
-            
-
-            
-
-            <code class="ruby">        legiscan_bill_id = legiscan_response_bill[&#39;bill_id&#39;]</code>
           </li>
         </div>
       
@@ -1772,12 +1772,23 @@
 
             
 
+            <code class="ruby">        legiscan_bill_id = legiscan_response_bill[&#39;bill_id&#39;]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="5" data-linenumber="43">
+            <span class="hits">5</span>
+            
+
+            
+
             <code class="ruby">        existing_database_bill = Bill.where(legiscan_bill_id:).first</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="43">
+          <li class="never" data-hits="" data-linenumber="44">
             
             
 
@@ -1788,7 +1799,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="44">
+          <li class="covered" data-hits="5" data-linenumber="45">
             <span class="hits">5</span>
             
 
@@ -1799,7 +1810,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="45">
+          <li class="covered" data-hits="2" data-linenumber="46">
             <span class="hits">2</span>
             
 
@@ -1810,7 +1821,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="46">
+          <li class="covered" data-hits="3" data-linenumber="47">
             <span class="hits">3</span>
             
 
@@ -1821,7 +1832,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="47">
+          <li class="covered" data-hits="2" data-linenumber="48">
             <span class="hits">2</span>
             
 
@@ -1832,7 +1843,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="48">
+          <li class="never" data-hits="" data-linenumber="49">
             
             
 
@@ -1843,7 +1854,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="49">
+          <li class="never" data-hits="" data-linenumber="50">
             
             
 
@@ -1854,24 +1865,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="50">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
           <li class="never" data-hits="" data-linenumber="51">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -1882,12 +1882,23 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="53">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="53">
+          <li class="covered" data-hits="1" data-linenumber="54">
             <span class="hits">1</span>
             
 
@@ -1898,7 +1909,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="54">
+          <li class="covered" data-hits="6" data-linenumber="55">
             <span class="hits">6</span>
             
 
@@ -1909,7 +1920,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="55">
+          <li class="never" data-hits="" data-linenumber="56">
             
             
 
@@ -1920,7 +1931,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="56">
+          <li class="never" data-hits="" data-linenumber="57">
             
             
 
@@ -1931,7 +1942,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="57">
+          <li class="never" data-hits="" data-linenumber="58">
             
             
 
@@ -1942,7 +1953,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="58">
+          <li class="covered" data-hits="1" data-linenumber="59">
             <span class="hits">1</span>
             
 
@@ -1953,24 +1964,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="59">
-            <span class="hits">4</span>
-            
-
-            
-
-            <code class="ruby">    legiscan_bill_id = legiscan_response_bill[&#39;bill_id&#39;]</code>
-          </li>
-        </div>
-      
-        <div>
           <li class="covered" data-hits="4" data-linenumber="60">
             <span class="hits">4</span>
             
 
             
 
-            <code class="ruby">    legiscan_bill_detail = legiscan_api.get_bill(legiscan_bill_id)</code>
+            <code class="ruby">    legiscan_bill_id = legiscan_response_bill[&#39;bill_id&#39;]</code>
           </li>
         </div>
       
@@ -1981,7 +1981,7 @@
 
             
 
-            <code class="ruby">    new_status_integer = legiscan_response_bill[&#39;status&#39;].to_i</code>
+            <code class="ruby">    legiscan_bill_detail = legiscan_api.get_bill(legiscan_bill_id)</code>
           </li>
         </div>
       
@@ -1992,12 +1992,23 @@
 
             
 
+            <code class="ruby">    new_status_integer = legiscan_response_bill[&#39;status&#39;].to_i</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="63">
+            <span class="hits">4</span>
+            
+
+            
+
             <code class="ruby">    new_status_string = Bill.statuses.key(new_status_integer)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="63">
+          <li class="never" data-hits="" data-linenumber="64">
             
             
 
@@ -2008,7 +2019,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="64">
+          <li class="covered" data-hits="3" data-linenumber="65">
             <span class="hits">3</span>
             
 
@@ -2019,7 +2030,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="65">
+          <li class="covered" data-hits="5" data-linenumber="66">
             <span class="hits">5</span>
             
 
@@ -2030,24 +2041,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="66">
+          <li class="never" data-hits="" data-linenumber="67">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="67">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">      doc_id = text[&#39;doc_id&#39;]</code>
           </li>
         </div>
       
@@ -2058,7 +2058,7 @@
 
             
 
-            <code class="ruby">      full_text = legiscan_api.get_bill_text(doc_id)</code>
+            <code class="ruby">      doc_id = text[&#39;doc_id&#39;]</code>
           </li>
         </div>
       
@@ -2069,7 +2069,7 @@
 
             
 
-            <code class="ruby">      summary = OpenaiApi.new.legal_text_summary(full_text)</code>
+            <code class="ruby">      full_text = legiscan_api.get_bill_text(doc_id)</code>
           </li>
         </div>
       
@@ -2080,7 +2080,7 @@
 
             
 
-            <code class="ruby">      status_last_updated = DateTime.parse(legiscan_response_bill[&#39;status_date&#39;])</code>
+            <code class="ruby">      summary = OpenaiApi.new.legal_text_summary(full_text)</code>
           </li>
         </div>
       
@@ -2091,18 +2091,18 @@
 
             
 
-            <code class="ruby">      existing_database_bill.update!(summary:, legiscan_doc_id: doc_id,</code>
+            <code class="ruby">      status_last_updated = DateTime.parse(legiscan_response_bill[&#39;status_date&#39;])</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="72">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="72">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">                                     status: new_status_integer, status_last_updated:)</code>
+            
+
+            <code class="ruby">      existing_database_bill.update!(summary:, legiscan_doc_id: doc_id,</code>
           </li>
         </div>
       
@@ -2113,18 +2113,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">                                     status: new_status_integer, status_last_updated:)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="74">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="74">
+            
             
 
             
 
-            <code class="ruby">      Rails.logger.info &quot;Updated bill with Title: #{existing_database_bill.title}, Id: #{existing_database_bill.id}&quot;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -2135,18 +2135,18 @@
 
             
 
-            <code class="ruby">      break</code>
+            <code class="ruby">      Rails.logger.info &quot;Updated bill with Title: #{existing_database_bill.title}, Id: #{existing_database_bill.id}&quot;</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="76">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="76">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">    end</code>
+            
+
+            <code class="ruby">      break</code>
           </li>
         </div>
       
@@ -2157,12 +2157,23 @@
 
             
 
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="78">
+            
+            
+
+            
+
             <code class="ruby">  rescue StandardError =&gt; e</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="78">
+          <li class="covered" data-hits="1" data-linenumber="79">
             <span class="hits">1</span>
             
 
@@ -2173,7 +2184,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="79">
+          <li class="never" data-hits="" data-linenumber="80">
             
             
 
@@ -2184,7 +2195,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="80">
+          <li class="covered" data-hits="1" data-linenumber="81">
             <span class="hits">1</span>
             
 
@@ -2195,7 +2206,18 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="81">
+          <li class="covered" data-hits="1" data-linenumber="82">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    Sentry.capture_message(error_log_message)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="83">
             
             
 
@@ -2206,7 +2228,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="82">
+          <li class="never" data-hits="" data-linenumber="84">
             
             
 
@@ -2217,7 +2239,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="83">
+          <li class="covered" data-hits="1" data-linenumber="85">
             <span class="hits">1</span>
             
 
@@ -2228,7 +2250,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="84">
+          <li class="covered" data-hits="4" data-linenumber="86">
             <span class="hits">4</span>
             
 
@@ -2239,7 +2261,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="85">
+          <li class="covered" data-hits="4" data-linenumber="87">
             <span class="hits">4</span>
             
 
@@ -2250,7 +2272,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="86">
+          <li class="covered" data-hits="4" data-linenumber="88">
             <span class="hits">4</span>
             
 
@@ -2261,7 +2283,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="87">
+          <li class="covered" data-hits="4" data-linenumber="89">
             <span class="hits">4</span>
             
 
@@ -2272,7 +2294,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="88">
+          <li class="covered" data-hits="4" data-linenumber="90">
             <span class="hits">4</span>
             
 
@@ -2283,7 +2305,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="89">
+          <li class="covered" data-hits="3" data-linenumber="91">
             <span class="hits">3</span>
             
 
@@ -2294,7 +2316,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="90">
+          <li class="covered" data-hits="3" data-linenumber="92">
             <span class="hits">3</span>
             
 
@@ -2305,7 +2327,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="91">
+          <li class="covered" data-hits="3" data-linenumber="93">
             <span class="hits">3</span>
             
 
@@ -2316,7 +2338,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="92">
+          <li class="never" data-hits="" data-linenumber="94">
             
             
 
@@ -2327,7 +2349,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="93">
+          <li class="covered" data-hits="3" data-linenumber="95">
             <span class="hits">3</span>
             
 
@@ -2338,7 +2360,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="94">
+          <li class="covered" data-hits="1" data-linenumber="96">
             <span class="hits">1</span>
             
 
@@ -2349,35 +2371,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="95">
+          <li class="never" data-hits="" data-linenumber="97">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="96">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      doc_id = text[&#39;doc_id&#39;]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="97">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      full_text = legiscan_api.get_bill_text(doc_id)</code>
           </li>
         </div>
       
@@ -2388,7 +2388,7 @@
 
             
 
-            <code class="ruby">      summary = OpenaiApi.new.legal_text_summary(full_text)</code>
+            <code class="ruby">      doc_id = text[&#39;doc_id&#39;]</code>
           </li>
         </div>
       
@@ -2399,29 +2399,29 @@
 
             
 
+            <code class="ruby">      full_text = legiscan_api.get_bill_text(doc_id)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="100">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      summary = OpenaiApi.new.legal_text_summary(full_text)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="101">
+            <span class="hits">1</span>
+            
+
+            
+
             <code class="ruby">      database_bill = Bill.create!(status: bill_status_integer,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="100">
-            
-            
-
-            
-
-            <code class="ruby">                                   status_last_updated:,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="101">
-            
-            
-
-            
-
-            <code class="ruby">                                   title:,</code>
           </li>
         </div>
       
@@ -2432,7 +2432,7 @@
 
             
 
-            <code class="ruby">                                   summary:,</code>
+            <code class="ruby">                                   status_last_updated:,</code>
           </li>
         </div>
       
@@ -2443,7 +2443,7 @@
 
             
 
-            <code class="ruby">                                   legiscan_doc_id: doc_id,</code>
+            <code class="ruby">                                   title:,</code>
           </li>
         </div>
       
@@ -2454,7 +2454,7 @@
 
             
 
-            <code class="ruby">                                   legiscan_bill_id:,</code>
+            <code class="ruby">                                   summary:,</code>
           </li>
         </div>
       
@@ -2465,100 +2465,12 @@
 
             
 
-            <code class="ruby">                                   session_id:)</code>
+            <code class="ruby">                                   legiscan_doc_id: doc_id,</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="106">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      text_exists = true</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="107">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      break</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="108">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="109">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="110">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    unless text_exists</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="111">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">      database_bill = Bill.create!(status: bill_status_integer,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="112">
-            
-            
-
-            
-
-            <code class="ruby">                                   status_last_updated:,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="113">
-            
-            
-
-            
-
-            <code class="ruby">                                   title:,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="114">
+          <li class="never" data-hits="" data-linenumber="106">
             
             
 
@@ -2569,7 +2481,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="115">
+          <li class="never" data-hits="" data-linenumber="107">
             
             
 
@@ -2580,7 +2492,29 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="116">
+          <li class="covered" data-hits="1" data-linenumber="108">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      text_exists = true</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="109">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      break</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="110">
             
             
 
@@ -2591,7 +2525,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="117">
+          <li class="never" data-hits="" data-linenumber="111">
             
             
 
@@ -2602,13 +2536,79 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="118">
+          <li class="covered" data-hits="3" data-linenumber="112">
             <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">    Rails.logger.info &quot;Created bill with Title: #{database_bill.title}, id: #{database_bill.id}&quot;</code>
+            <code class="ruby">    unless text_exists</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="113">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">      database_bill = Bill.create!(status: bill_status_integer,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="114">
+            
+            
+
+            
+
+            <code class="ruby">                                   status_last_updated:,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="115">
+            
+            
+
+            
+
+            <code class="ruby">                                   title:,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="116">
+            
+            
+
+            
+
+            <code class="ruby">                                   legiscan_bill_id:,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="117">
+            
+            
+
+            
+
+            <code class="ruby">                                   session_id:)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="118">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -2619,18 +2619,18 @@
 
             
 
-            <code class="ruby">  rescue StandardError =&gt; e</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="120">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="120">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">    error_log_message = &quot;Error creating bill with Title: #{title}, &quot; \</code>
+            <code class="ruby">    Rails.logger.info &quot;Created bill with Title: #{database_bill.title}, id: #{database_bill.id}&quot;</code>
           </li>
         </div>
       
@@ -2641,7 +2641,7 @@
 
             
 
-            <code class="ruby">                        &quot;Legiscan Bill Id: #{legiscan_bill_id}, Error: #{e.message}&quot;</code>
+            <code class="ruby">  rescue StandardError =&gt; e</code>
           </li>
         </div>
       
@@ -2652,7 +2652,7 @@
 
             
 
-            <code class="ruby">    Rails.logger.error(error_log_message)</code>
+            <code class="ruby">    error_log_message = &quot;Error creating bill with Title: #{title}, &quot; \</code>
           </li>
         </div>
       
@@ -2663,12 +2663,45 @@
 
             
 
+            <code class="ruby">                        &quot;Legiscan Bill Id: #{legiscan_bill_id}, Error: #{e.message}&quot;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="124">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    Rails.logger.error(error_log_message)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="125">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    Sentry.capture_message(error_log_message)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="126">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="124">
+          <li class="never" data-hits="" data-linenumber="127">
             
             
 

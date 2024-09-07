@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateAndUpdateBillsJob < ApplicationJob
+class CreateAndUpdateBillsJob < ApplicationJob # rubocop:disable Metrics/ClassLength
   queue_as :default
 
   SESSION_CUTOFF_YEAR = 2023
@@ -31,6 +31,7 @@ class CreateAndUpdateBillsJob < ApplicationJob
     error_log_message = 'Error creating session with legiscan_session_id: ' \
                         "#{legiscan_session['session_id']}, Error: #{e.message}"
     Rails.logger.error(error_log_message)
+    Sentry.capture_message(error_log_message)
   end
 
   def create_and_update_bills(legiscan_api)
@@ -78,6 +79,7 @@ class CreateAndUpdateBillsJob < ApplicationJob
     error_log_message = "Error updating bill with Title: #{existing_database_bill.title}, " \
                         "Id: #{existing_database_bill.id}, Error: #{e.message}"
     Rails.logger.error(error_log_message)
+    Sentry.capture_message(error_log_message)
   end
 
   def create_new_bill(legiscan_api, legiscan_response_bill, session_id)
@@ -120,5 +122,6 @@ class CreateAndUpdateBillsJob < ApplicationJob
     error_log_message = "Error creating bill with Title: #{title}, " \
                         "Legiscan Bill Id: #{legiscan_bill_id}, Error: #{e.message}"
     Rails.logger.error(error_log_message)
+    Sentry.capture_message(error_log_message)
   end
 end

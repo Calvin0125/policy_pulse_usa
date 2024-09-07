@@ -59,6 +59,7 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       expected_log_message = 'Error creating session with legiscan_session_id: ' \
                              "#{mock_session_response[1]['session_id']}, Error: #{error_message}"
       expect(Rails.logger).to receive(:error).with(expected_log_message)
+      expect(Sentry).to receive(:capture_message).with(expected_log_message)
 
       job.check_for_new_sessions(legiscan_api)
     end
@@ -298,6 +299,7 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       expected_log_message = "Error updating bill with Title: #{database_bill.title}, " \
                              "Id: #{database_bill.id}, Error: #{error_message}"
       expect(Rails.logger).to receive(:error).with(expected_log_message)
+      expect(Sentry).to receive(:capture_message).with(expected_log_message)
 
       job.update_existing_bill_status_and_summary(legiscan_api, legiscan_response_bill, database_bill)
     end
@@ -333,12 +335,15 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
     it 'catches and logs an error' do
       legiscan_response_bill = { 'bill_id' => 123, 'title' => 'Bill 1', 'status' => 2, 'status_date' => '2024-08-01' }
       allow(Rails.logger).to receive(:error)
+      allow(Sentry).to receive(:capture_message)
       error_message = 'This is an error message.'
       allow(Bill).to receive(:statuses).and_raise(StandardError, error_message)
       job.create_new_bill(legiscan_api, legiscan_response_bill, session.id)
 
-      expect(Rails.logger).to have_received(:error)
-        .with("Error creating bill with Title: Bill 1, Legiscan Bill Id: 123, Error: #{error_message}")
+      expected_log_message = "Error creating bill with Title: Bill 1, Legiscan Bill Id: 123, Error: #{error_message}"
+
+      expect(Rails.logger).to have_received(:error).with(expected_log_message)
+      expect(Sentry).to have_received(:capture_message).with(expected_log_message)
     end
   end
 end
