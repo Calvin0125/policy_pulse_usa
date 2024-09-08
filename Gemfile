@@ -58,6 +58,7 @@ gem 'stackprof'
 gem 'vcr'
 gem 'vite_rails'
 gem 'webmock'
+gem 'whenever'
 gem 'will_paginate'
 
 # Use Sass to process CSS
