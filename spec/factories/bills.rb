@@ -4,7 +4,7 @@
 #
 # Table name: bills
 #
-#  id                  :integer          not null, primary key
+#  id                  :bigint           not null, primary key
 #  status              :integer          not null
 #  status_last_updated :datetime
 #  summary             :string
@@ -13,7 +13,7 @@
 #  updated_at          :datetime         not null
 #  legiscan_bill_id    :integer          not null
 #  legiscan_doc_id     :integer
-#  session_id          :integer          not null
+#  session_id          :bigint           not null
 #
 # Indexes
 #
@@ -24,7 +24,7 @@
 #
 # Foreign Keys
 #
-#  session_id  (session_id => sessions.id)
+#  fk_rails_...  (session_id => sessions.id)
 #
 
 FactoryBot.define do

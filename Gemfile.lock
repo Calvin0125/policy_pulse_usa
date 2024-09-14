@@ -184,6 +184,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
+    pg (1.5.8)
     psych (5.1.2)
       stringio
     public_suffix (6.0.0)
@@ -362,6 +363,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   pdf-reader
+  pg
   puma (~> 5.0)
   rails (~> 7.0.8)
   redis

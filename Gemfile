@@ -60,6 +60,7 @@ gem 'vite_rails'
 gem 'webmock'
 gem 'whenever'
 gem 'will_paginate'
+gem 'pg'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

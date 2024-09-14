@@ -36,6 +36,7 @@
 
 .byebug_history
 dump.rdb
+policy_pulse_usa_key.pem
 
 # Vite Ruby
 /public/vite*
