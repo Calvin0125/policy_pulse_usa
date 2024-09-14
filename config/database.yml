@@ -27,3 +27,5 @@ test:
 production:
   <<: *default
   database: policy_pulse_prod
+  username: postgres
+  password: <%= Rails.application.credentails[:postgresql_password_production] %>
