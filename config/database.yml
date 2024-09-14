@@ -29,3 +29,5 @@ production:
   database: policy_pulse_prod
   username: postgres
   password: <%= Rails.application.credentails[:postgresql_password_production] %>
+  host: database-1.cx28c6ae23er.us-east-2.rds.amazonaws.com
+  port: 5432
