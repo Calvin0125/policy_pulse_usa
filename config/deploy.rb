@@ -6,6 +6,7 @@ lock '~> 3.19.1'
 set :application, 'policy_pulse_usa'
 set :repo_url, 'git@github.com:Calvin0125/policy_pulse_usa.git'
 set :deploy_to, '/var/www/policy_pulse_usa'
+set :branch, 'main'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
