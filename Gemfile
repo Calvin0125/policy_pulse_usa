@@ -46,6 +46,10 @@ gem 'bootsnap', require: false
 
 gem 'annotate'
 gem 'byebug'
+gem 'capistrano', '~> 3.17'
+gem 'capistrano-rails', '~> 1.6'
+gem 'capistrano-bundler', '~> 2.0'
+gem 'capistrano3-puma', '~> 5.0'
 gem 'factory_bot_rails'
 gem 'http'
 gem 'pdf-reader'
