@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CreateAndUpdateBillsJob < ApplicationJob # rubocop:disable Metrics/ClassLength
-  include Sidekiq::Worker
+  queue_as :default
 
   SESSION_CUTOFF_YEAR = 2023
   BILL_CUTOFF_DATE = DateTime.new(2024, 8, 1)

@@ -25,5 +25,5 @@ set :output, 'log/cron_log.log'
 env :TZ, 'America/New_York'
 
 every 1.day, at: '1:00 am' do
-  runner 'CreateAndUpdateBillsJob.perform_async'
+  runner 'CreateAndUpdateBillsJob.perform_later'
 end
