@@ -7,6 +7,8 @@ class CreateAndUpdateBillsJob < ApplicationJob # rubocop:disable Metrics/ClassLe
   BILL_CUTOFF_DATE = DateTime.new(2024, 8, 1)
 
   def perform
+    return if LegiscanCredit.limit_reached?
+
     legiscan_api = LegiscanApi.new
     check_for_new_sessions(legiscan_api)
     create_and_update_bills(legiscan_api)

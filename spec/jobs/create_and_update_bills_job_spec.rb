@@ -16,11 +16,27 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
       allow(LegiscanApi).to receive(:new).and_return(legiscan_api)
     end
 
-    it 'calls check_for_new_sessions with legiscan_api' do
-      described_class_instance.perform_now
+    context 'when under the limit' do
+      before { allow(LegiscanCredit).to receive(:limit_reached?).and_return(false) }
 
-      expect(described_class_instance).to have_received(:check_for_new_sessions).with(legiscan_api)
-      expect(described_class_instance).to have_received(:create_and_update_bills).with(legiscan_api)
+      it 'calls check_for_new_sessions with legiscan_api' do
+        described_class_instance.perform_now
+
+        expect(described_class_instance).to have_received(:check_for_new_sessions).with(legiscan_api)
+        expect(described_class_instance).to have_received(:create_and_update_bills).with(legiscan_api)
+      end
+    end
+
+    context 'when the credit limit has been reached' do
+      before { allow(LegiscanCredit).to receive(:limit_reached?).and_return(true) }
+
+      it 'returns nil and does not call any session/bill methods' do
+        result = described_class_instance.perform_now
+
+        expect(result).to be_nil
+        expect(described_class_instance).not_to have_received(:check_for_new_sessions)
+        expect(described_class_instance).not_to have_received(:create_and_update_bills)
+      end
     end
   end
 
