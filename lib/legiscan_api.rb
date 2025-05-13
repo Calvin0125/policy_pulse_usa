@@ -26,7 +26,10 @@ class LegiscanApi
     #   "session_hash" => "6a282aa75396db5e79686190ffabda6d",
     #   "name" => "118th Congress"
     # }
+    return if LegiscanCredit.limit_reached?
+
     response = HTTP.get("https://api.legiscan.com/?key=#{@api_key}&op=getSessionList&state=US")
+    LegiscanCredit.increment_credits
     JSON.parse(response.body)['sessions']
   end
 
@@ -45,7 +48,10 @@ class LegiscanApi
     #   "title" => "Water Quality Certification and Energy Project Improvement Act..."
     #   "description" => "To lower energy costs by increasing American energy production..."
     # }
+    return if LegiscanCredit.limit_reached?
+
     response = HTTP.get("https://api.legiscan.com/?key=#{@api_key}&op=getMasterList&id=#{session_id}")
+    LegiscanCredit.increment_credits
     master_list = JSON.parse(response.body)['masterlist']
     # First key/value pair in the response is the session, all after that are bills
     master_list.values[1..]
@@ -54,12 +60,18 @@ class LegiscanApi
   def get_bill(bill_id)
     # returns a bill hash
     # has many keys, but we are interested in 'status' and 'status_date'
+    return if LegiscanCredit.limit_reached?
+
     response = HTTP.get("https://api.legiscan.com/?key=#{@api_key}&op=getBill&id=#{bill_id}")
+    LegiscanCredit.increment_credits
     JSON.parse(response.body)['bill']
   end
 
   def get_bill_text(doc_id)
+    return if LegiscanCredit.limit_reached?
+
     response = HTTP.get("https://api.legiscan.com/?key=#{@api_key}&op=getBillText&id=#{doc_id}")
+    LegiscanCredit.increment_credits
     base_64_encoded_text = JSON.parse(response.body)['text']['doc']
     decoded_text = Base64.decode64(base_64_encoded_text)
     pdf_io = StringIO.new(decoded_text)
