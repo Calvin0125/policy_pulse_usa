@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_810_194_520) do
+ActiveRecord::Schema[7.0].define(version: 20_250_513_003_206) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -30,6 +30,14 @@ ActiveRecord::Schema[7.0].define(version: 20_240_810_194_520) do
     t.index ['legiscan_doc_id'], name: 'index_bills_on_legiscan_doc_id', unique: true
     t.index ['session_id'], name: 'index_bills_on_session_id'
     t.index ['title'], name: 'index_bills_on_title', unique: true
+  end
+
+  create_table 'legiscan_credits', force: :cascade do |t|
+    t.string 'month', null: false
+    t.integer 'credits_used', default: 0, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['month'], name: 'index_legiscan_credits_on_month', unique: true
   end
 
   create_table 'sessions', force: :cascade do |t|

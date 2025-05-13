@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LegiscanApi
+  API_MONTHLY_CREDIT_LIMIT = 30_000
+
   def initialize
     @api_key = Rails.application.credentials.legiscan_api_key
   end
