@@ -207,6 +207,10 @@ RSpec.describe CreateAndUpdateBillsJob, type: :job do
 
       job.create_and_update_bills(legiscan_api)
 
+      expect(mock_bill_list_response2.map { |b| b['status_date'] }).to eq(
+        ['2024-08-04', '2024-08-03', '2024-08-02', '2024-07-31']
+      )
+
       expect(Bill.count).to eq(5)
 
       expect(bill1.reload.updated_at).to eq(bill1_updated_at)

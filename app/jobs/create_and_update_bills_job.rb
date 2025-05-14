@@ -38,7 +38,10 @@ class CreateAndUpdateBillsJob < ApplicationJob # rubocop:disable Metrics/ClassLe
 
   def create_and_update_bills(legiscan_api)
     Session.where('end_date > ?', Time.now).each do |session|
-      legiscan_api.get_bill_list(session.legiscan_session_id).each do |legiscan_response_bill|
+      bill_list = legiscan_api.get_bill_list(session.legiscan_session_id)
+      bill_list.sort_by! { |bill| bill["status_date"] }.reverse!
+
+      bill_list.each do |legiscan_response_bill|
         next if legiscan_response_bill['status_date'] < BILL_CUTOFF_DATE
 
         legiscan_bill_id = legiscan_response_bill['bill_id']
