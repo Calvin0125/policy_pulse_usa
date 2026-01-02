@@ -4,7 +4,7 @@ class BillsController < ApplicationController
   BILLS_PER_PAGE = 5
 
   def index
-    bills = if bill_params[:onlyWithSummary]
+    bills = if bill_params[:onlyWithSummary] == 'true'
               Bill.order(status_last_updated: :desc)
                   .where.not(summary: nil)
                   .paginate(page: bill_params[:page], per_page: BILLS_PER_PAGE)
