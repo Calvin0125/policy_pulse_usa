@@ -35,7 +35,7 @@
     <v-container>
       <v-row>
         <v-col
-          v-for="(bill, index) in filteredBills"
+          v-for="(bill, index) in bills"
           :key="index"
           cols="12"
         >
@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async fetchBills() {
-      const response = await axios.get('/bills', { headers: { 'Accept': 'application/json' }, params: { page: this.currentPage } });
+      const response = await axios.get('/bills', { headers: { 'Accept': 'application/json' }, params: { page: this.currentPage, onlyWithSummary: this.onlyWithSummary} });
       this.bills = response.data.bills;
     },
     openInfoModal() {
@@ -95,13 +95,10 @@ export default {
       this.fetchBills();
     }
   },
-  computed: {
-    filteredBills() {
-      if (!this.onlyWithSummary) {
-        return this.bills
-      }
-
-      return this.bills.filter(bill => !!bill.summary)
+  watch: {
+    onlyWithSummary(newVal, oldVal) {
+      this.currentPage = 1
+      this.fetchBills()
     }
   }
 }
