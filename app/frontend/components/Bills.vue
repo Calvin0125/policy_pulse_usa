@@ -18,15 +18,24 @@
           <v-icon @click="openInfoModal" class="clickable mb-0">mdi-information</v-icon>
         </v-col>
         <v-col>
-          <h3>Federal Bills Ordered by Most Recently Created or Updated</h3>
+          <h2>Federal Bills Ordered by Most Recently Created or Updated</h2>
         </v-col>
         <v-col cols="auto"></v-col>
+      </v-row>
+      <v-row class="mt-2" align="center" justify="center">
+        <v-switch v-model="onlyWithSummary" inset>
+          <template #label>
+            <span class="text-h6 font-weight-bold">
+              Only Show Bills With Summaries
+            </span>
+          </template>
+        </v-switch>
       </v-row>
     </v-container>
     <v-container>
       <v-row>
         <v-col
-          v-for="(bill, index) in bills"
+          v-for="(bill, index) in filteredBills"
           :key="index"
           cols="12"
         >
@@ -59,7 +68,8 @@ export default {
   data() {
     return {
       currentPage: 1,
-      bills: []
+      bills: [],
+      onlyWithSummary: false
     };
   },
   beforeMount() {
@@ -83,6 +93,15 @@ export default {
     goToPreviousPage() {
       this.currentPage -= 1;
       this.fetchBills();
+    }
+  },
+  computed: {
+    filteredBills() {
+      if (!this.onlyWithSummary) {
+        return this.bills
+      }
+
+      return this.bills.filter(bill => !!bill.summary)
     }
   }
 }
@@ -129,5 +148,10 @@ export default {
 .page-indicator {
   margin: 0 15px;
   font-size: 1.2rem;
+}
+
+:deep(.v-switch .v-label) {
+  opacity: 1 !important;
+  color: #e0e0e0 !important;
 }
 </style>
